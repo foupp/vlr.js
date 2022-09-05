@@ -1,15 +1,22 @@
 {
-  "name": "@example/basics",
-  "version": "0.0.1",
-  "private": true,
+  "name": "vlr.js",
+  "version": "1.0.0",
+  "description": "Unofficial API for vlr.gg (Valorant esports coverage)",
+  "main": "index.js",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "@astrojs/vercel": "^0.2.1",
-    "astro": "^1.0.0-beta.27"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foupp/vlr.js.git"
+  },
+  "keywords": [
+    "valorant"
+  ],
+  "author": "foup",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/foupp/vlr.js/issues"
+  },
+  "homepage": "https://github.com/foupp/vlr.js#readme"
 }
