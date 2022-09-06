@@ -2,7 +2,7 @@ enum Path {
     Match = `${!(isNaN(parseInt(string)))}` | `${!(isNaN(parseInt(string)))}/${string}`
 }
 
-type Match = {
+type Matches = {
     date: string;
     teams: string[];
     time: string;
@@ -11,7 +11,30 @@ type Match = {
     series: string;
     eta: string;
     live: 0 | 1 | boolean;
-}
+}[] | { code: 404, status: 'No match information found.' }
+
+type Match = {
+    teams: Array<{ name: string; link: string; }>;
+    notes: string[];
+    maps: Array<"Pearl", "Ascent", "Fracture", "Breeze", "Haven", "Icebox", "Split">;
+    patch: string;
+    winner: string | undefined;
+    time: string;
+    vods: {
+        fullmatch: string | undefined;
+        maps: {
+            1: string | undefined;
+            2: string | undefined;
+            3: string | undefined;
+        }
+    } | {};
+    event: {
+        name: string;
+        series: string;
+        image: string;
+        link: string;
+    }
+} | { code: 404, status: 'No match information found.' }
 
 MatchValidator = (path: string) => {
     if (path.includes('/')) {
@@ -28,6 +51,8 @@ MatchValidator = (path: string) => {
 
 class VLR {
     async getMatch(path: Path.Match): Promise<Match>;
+    async getMatches(): Promise<Matches>;
+    async getMatchResults(): Promise<Match>;
 }
 
 export default VLR;

@@ -42,7 +42,7 @@ async function getMatch(matchId: string, matchName: string) {
         },
         winner: undefined,
         patch: undefined,
-        time: undefined,
+        time: "",
         status: undefined,
         event: {
             name: undefined,
@@ -85,9 +85,9 @@ async function getMatch(matchId: string, matchName: string) {
     for (let i = 0; i < times.length; i++) {
         const text = times[i].textContent.replace(/(\r\n|\n|\r)/gm, '').trim();
         if (i === 0) {
-            cache.time += moment.tz(text, "dddd, MMMM Do", Intl.DateTimeFormat().resolvedOptions().timeZone).format("dddd, MMMM Do");
+            cache.time += text;
         } else if (i === 1) {
-            cache.time += ` - ${moment.tz(text, "HH:mm A z", Intl.DateTimeFormat().resolvedOptions().timeZone).format("HH:mm A z")}`;
+            cache.time += ` - ${text}`;
         }
     }
 
