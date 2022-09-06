@@ -20,7 +20,7 @@
     "url": "https://github.com/foupp/vlr.js/issues"
   },
   "homepage": "https://github.com/foupp/vlr.js#readme",
-  "dependencies": {
+  "devDependencies": {
     "undici": "^5.10.0"
   }
 }
