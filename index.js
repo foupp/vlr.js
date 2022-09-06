@@ -26,7 +26,7 @@ class VLR {
         return res.body.json();
     }
     async getMatchResults(page) {
-        const res = await request(url(`/match/results/${page ? page : 1}`));
+        const res = await request(url(`/matches/results${page !== undefined ? `/${page}` : null}`));
         return res.body.json();
     }
 }

@@ -52,7 +52,7 @@ MatchValidator = (path: string) => {
 class VLR {
     async getMatch(path: Path.Match): Promise<Match>;
     async getMatches(): Promise<Matches>;
-    async getMatchResults(): Promise<Match>;
+    async getMatchResults(page?: number | string): Promise<Match>;
 }
 
 export default VLR;
