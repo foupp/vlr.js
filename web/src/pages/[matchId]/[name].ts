@@ -10,6 +10,11 @@ const Maps = /Pearl|Fracture|Split|Bind|Ascent|Haven|Icebox|Breeze/g;
 async function getMatch(matchId: string, matchName: string) {
     const parser = new DOMParser();
 
+    if (parseInt(matchId) < 6)return {
+        code: 404,
+        message: "Page not found"
+    }
+
     const x = await fetch(`https://www.vlr.gg/${matchId}/${matchName}`)
 
     if (x.status === 404) return {
