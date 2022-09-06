@@ -56,4 +56,3 @@ class VLR {
 }
 
 export default VLR;
-module.exports = VLR;
