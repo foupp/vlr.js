@@ -1,6 +1,6 @@
 {
   "name": "vlr.js",
-  "version": "1.1.0",
+  "version": "1.2/0",
   "description": "Unofficial API for vlr.gg (Valorant esports coverage)",
   "exports": "./index.js",
   "type": "module",
@@ -20,7 +20,7 @@
     "url": "https://github.com/foupp/vlr.js/issues"
   },
   "homepage": "https://github.com/foupp/vlr.js#readme",
-  "devDependencies": {
+  "dependencies": {
     "undici": "^5.10.0"
   }
 }
