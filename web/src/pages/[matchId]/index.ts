@@ -10,9 +10,9 @@ const Maps = /Pearl|Fracture|Split|Bind|Ascent|Haven|Icebox|Breeze/g;
 async function getMatch(matchId: string) {
     const parser = new DOMParser();
 
-    if (parseInt(matchId) < 6)return {
+    if (parseInt(matchId) < 121) return {
         code: 404,
-        message: "Page not found"
+        message: "Match not found"
     }
 
     const x = await fetch(`https://www.vlr.gg/${matchId}`)
@@ -39,27 +39,30 @@ async function getMatch(matchId: string) {
 
     let vod = 0;
 
+    const series = html.getElementsByClassName("match-header-event-series")[0]?.textContent?.replace(/(\r\n|\n|\r|\t)/gm, '')?.trim()
+    const link = html.getElementsByClassName("match-header-event")[0]?.attributes?.find(({ name }) => name === "href")?.value;
+
     const cache = {
         teams: [],
         notes: [],
         maps: [],
         vods: {
-            fullmatch: undefined,
+            fullmatch: "Unknown",
             maps: {
-                1: undefined,
-                2: undefined,
-                3: undefined,
+                1: "Unknown",
+                2: "Unknown",
+                3: "Unknown",
             }
         },
-        winner: undefined,
-        patch: undefined,
+        winner: "Unknown",
+        patch: "Unknown",
         time: "",
-        status: undefined,
+        status: "Unknown",
         event: {
-            name: undefined,
-            series: html.getElementsByClassName("match-header-event-series")[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim(),
-            image: undefined,
-            link: 'https://vlr.gg' + html.getElementsByClassName("match-header-event")[0].attributes.find(({ name }) => name === "href").value,
+            name: "Unknown",
+            series: series || "Unknown",
+            image: "Unknown",
+            link: link ? 'https://vlr.gg' + link : "Unknown"
         }
     }
 

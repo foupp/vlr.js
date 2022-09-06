@@ -1,7 +1,3 @@
-enum Path {
-    Match = `${!(isNaN(parseInt(string)))}` | `${!(isNaN(parseInt(string)))}/${string}`
-}
-
 type Matches = {
     date: string;
     teams: string[];
@@ -50,7 +46,7 @@ MatchValidator = (path: string) => {
 }
 
 class VLR {
-    async getMatch(path: Path.Match): Promise<Match>;
+    async getMatch(path: string): Promise<Match>;
     async getMatches(): Promise<Matches>;
     async getMatchResults(page?: number | string): Promise<Match>;
 }
