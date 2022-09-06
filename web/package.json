@@ -10,6 +10,12 @@
   },
   "devDependencies": {
     "@astrojs/vercel": "^0.2.1",
-    "astro": "^1.0.0-beta.27"
+    "astro": "^1.0.0-beta.27",
+    "dom-parser": "^0.1.6",
+    "html-escaping": "^1.0.1",
+    "undici": "^5.10.0"
+  },
+  "dependencies": {
+    "moment-timezone": "^0.5.37"
   }
 }

@@ -1,28 +1,52 @@
 ---
 import Layout from "../components/Layout.astro";
 
-const ip = Astro.request.headers.get("x-real-ip");
-const city = decodeURIComponent(Astro.request.headers.get("x-vercel-ip-city"));
+const version = "1.0.0";
 ---
 
-<Layout title="Astro Vercel Edge">
+<Layout title="vlr.js">
   <main>
-    <h1>Hello from the <span class="text-gradient">Edge</span></h1>
+    <h1><span class="text-gradient">vlr</span>.js</h1>
     <div class="banner">
-      <p>Your city<br /><strong>{city}</strong></p>
-      <p>Your IP address<br /><strong>{ip}</strong></p>
+      <p>Version<br /><strong>{version}</strong></p>
+      <p>
+        Install<br /><strong style="user-select: all;" onclick="copy()">
+          <a href="https://www.npmjs.com/package/vlr.js" style="color: inherit;"
+            >npm install vlr.js</a
+          >
+        </strong>
+      </p>
     </div>
     <p class="footer">
       Built with <a href="https://github.com/withastro/astro">Astro</a> and <a
         href="https://github.com/withastro/astro/tree/main/packages/integrations/vercel"
         >@astrojs/vercel</a
-      > — <a href="https://github.com/JuanM04/astro-on-the-edge">Source</a>
+      > — <a
+        href="https://github.com/foupp/vlr.js/tree/main/web"
+        target="_blank">Source</a
+      >
     </p>
   </main>
+  <script is:inline>
+    function copy() {
+      var copyText = "npm install vlr.js";
+      navigator.clipboard.writeText(copyText);
+    }
+  </script>
 </Layout>
 
 <style>
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  a:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+  }
+
   :root {
+    user-select: none;
     --color-border: hsl(17, 24%, 90%);
     --astro-gradient: linear-gradient(0deg, #4f39fa, #da62c4);
     --night-sky-gradient: linear-gradient(
@@ -45,10 +69,11 @@ const city = decodeURIComponent(Astro.request.headers.get("x-vercel-ip-city"));
   }
 
   code {
-    font-size: 0.875em;
+    font-size: 1.175em;
     border: 0.1em solid var(--color-border);
     border-radius: 4px;
     padding: 0.15em 0.25em;
+    margin-top: 3em;
   }
 
   main {
