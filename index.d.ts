@@ -2,7 +2,15 @@ enum Path {
     Match = `${!(isNaN(parseInt(string)))}` | `${!(isNaN(parseInt(string)))}/${string}`
 }
 
-interface Match {
+type Match = {
+    date: string;
+    teams: string[];
+    time: string;
+    event: string;
+    status: "Upcoming" | "LIVE";
+    series: string;
+    eta: string;
+    live: 0 | 1 | boolean;
 }
 
 MatchValidator = (path: string) => {
