@@ -1,6 +1,6 @@
 {
   "name": "vlr.js",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "Unofficial API for vlr.gg (Valorant esports coverage)",
   "exports": "./index.js",
   "type": "module",
