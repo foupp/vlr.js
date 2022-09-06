@@ -185,7 +185,11 @@ export async function get() {
             status: 200
         });
     } catch (error) {
-        return new Response(JSON.stringify(error), {
+        console.error(error);
+        return new Response(JSON.stringify({
+            code: 500,
+            message: 'There was an error while fetching the match information.'
+        }), {
             status: 500,
             statusText: error.message
         });
