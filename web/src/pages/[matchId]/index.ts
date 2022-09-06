@@ -1,12 +1,10 @@
-import { request } from "undici";
 import DOMParser from "dom-parser";
-import { unescape } from "html-escaping";
 
 async function getMatch(matchId: string) {
     const parser = new DOMParser();
 
-    const x = await request(`https://www.vlr.gg/${matchId}`)
-    const data = await x.body.text();
+    const x = await fetch(`https://www.vlr.gg/${matchId}`)
+    const data = await x.text()
 
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 

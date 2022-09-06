@@ -1,12 +1,11 @@
-import u from "undici";
 import DOMParser from "dom-parser";
 import { unescape } from "html-escaping";
 
 async function getMatchResults() {
     const parser = new DOMParser();
 
-    const x = await u.request(`https://www.vlr.gg/matches/results`)
-    const data = await x.body.text()
+    const x = await fetch(`https://www.vlr.gg/matches/results`)
+    const data = await x.text()
 
     const html = parser.parseFromString(data, "text/html");
     let days = 0;

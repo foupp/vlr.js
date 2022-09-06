@@ -14,7 +14,6 @@
     "dom-parser": "^0.1.6",
     "html-escaping": "^1.0.1",
     "moment-timezone": "^0.5.37",
-    "undici": "^5.10.0",
     "vite": "^3.1.0"
   }
 }

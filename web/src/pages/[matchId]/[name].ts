@@ -1,7 +1,5 @@
-import { request } from "undici";
 import DOMParser from "dom-parser";
 import moment from "moment-timezone";
-import { unescape } from "html-escaping";
 
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
@@ -12,8 +10,8 @@ const Maps = /Pearl|Fracture|Split|Bind|Ascent|Haven|Icebox|Breeze/g;
 async function getMatch(matchId: string, matchName: string) {
     const parser = new DOMParser();
 
-    const x = await request(`https://www.vlr.gg/${matchId}/${matchName}`)
-    const data = await x.body.text();
+    const x = await fetch(`https://www.vlr.gg/${matchId}/${matchName}`)
+    const data = await x.text()
 
     const html = parser.parseFromString(data, "text/html");
 

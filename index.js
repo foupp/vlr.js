@@ -19,5 +19,5 @@ class VLR {
     }
 }
 
-export default 'a';
-module.exports = 'a';
+export default VLR;
+module.exports = VLR;

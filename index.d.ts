@@ -2,7 +2,10 @@ enum Path {
     Match = `${!(isNaN(parseInt(string)))}` | `${!(isNaN(parseInt(string)))}/${string}`
 }
 
-declare MatchValidator = (path: string) => {
+interface Match {
+}
+
+MatchValidator = (path: string) => {
     if (path.includes('/')) {
         path = path.split('/');
         const id = path[0];
@@ -16,9 +19,7 @@ declare MatchValidator = (path: string) => {
 }
 
 class VLR {
-    async getMatch(path: Path.Match) {
-        MatchValidator(path);
-    };
+    async getMatch(path: Path.Match): Promise<Match>;
 }
 
 export default VLR;
