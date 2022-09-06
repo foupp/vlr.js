@@ -1,7 +1,8 @@
 ---
 import Layout from "../components/Layout.astro";
+import latestVersion from "latest-version";
 
-const version = "1.0.0";
+const version = await latestVersion("vlr.js");
 ---
 
 <Layout title="vlr.js">
