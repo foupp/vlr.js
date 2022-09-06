@@ -19,15 +19,15 @@ class VLR {
         MatchValidator(path);
 
         const res = await request(url(path));
-        return res.body();
+        return res.body.json();
     }
     async getMatches() {
         const res = await request(url('/matches'));
-        return res.body();
+        return res.body.json();
     }
     async getMatchResults(page) {
         const res = await request(url(`/match/results/${page ? page : 1}`));
-        return res.body();
+        return res.body.json();
     }
 }
 
