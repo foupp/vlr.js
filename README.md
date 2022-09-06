@@ -1,7 +1,7 @@
 
 # vlr.js
 
-Unofficial API for [vlr.gg](https://www.vlr.gg/) (All features yet to be available)
+Unofficial API for [vlr.gg](https://www.vlr.gg/) (Valorant esports coverage)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 ## Feedback
