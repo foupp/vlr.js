@@ -11,6 +11,12 @@ async function getMatch(matchId: string, matchName: string) {
     const parser = new DOMParser();
 
     const x = await fetch(`https://www.vlr.gg/${matchId}/${matchName}`)
+
+    if (x.status === 404) return {
+        code: 404,
+        message: "Page not found"
+    }
+
     const data = await x.text()
 
     const html = parser.parseFromString(data, "text/html");

@@ -7,10 +7,10 @@ const MatchValidator = (path) => {
     if (path.includes('/')) {
         path = path.split('/');
         const id = path[1];
-        if (isNaN(parseInt(id))) throw Error('Invalid Match ID');
+        if (isNaN(parseInt(id))) throw Error('Invalid Match ID (Must be number as string type or number type)');
     } else {
         const id = path;
-        if (isNaN(parseInt(id))) throw Error('Invalid Match ID');
+        if (isNaN(parseInt(id))) throw Error('Invalid Match ID (Must be number as string type or number type)');
     }
 }
 
