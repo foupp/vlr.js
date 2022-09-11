@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/foupp/vlr.js.git"
+    "url": "git+https://github.com/vlrjs/vlr.js.git"
   },
   "keywords": [
     "valorant"
@@ -26,9 +26,9 @@
   "author": "foup",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/foupp/vlr.js/issues"
+    "url": "https://github.com/vlrjs/vlr.js/issues"
   },
-  "homepage": "https://github.com/foupp/vlr.js#readme",
+  "homepage": "https://github.com/vlrjs/vlr.js#readme",
   "dependencies": {
     "undici": "^5.10.0"
   }
