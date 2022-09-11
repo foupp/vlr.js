@@ -1,8 +1,17 @@
 {
   "name": "vlr.js",
-  "version": "1.2.5",
+  "version": "1.2.8",
   "description": "Unofficial API for vlr.gg (Valorant esports coverage)",
-  "exports": "./index.js",
+  "module": "./index.mjs",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./index.cjs",
+      "import": "./index.mjs",
+      "types": "./index.d.ts"
+    }
+  },
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

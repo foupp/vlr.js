@@ -1,4 +1,4 @@
-const { request } = require('undici');
+import { request } from 'undici'
 
 const url = (path) => 'https://vlr-js.vercel.app' + path;
 
@@ -26,9 +26,9 @@ class VLR {
         return res.body.json();
     }
     async getMatchResults(page) {
-        const res = await request(url('/matches/results' + page !== undefined ? `/${page}` : null));
+        const res = await request(url(`/matches/results${page !== undefined ? `/${page}` : null}`));
         return res.body.json();
     }
 }
 
-module.exports = VLR;
+export default VLR;

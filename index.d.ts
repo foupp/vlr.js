@@ -1,3 +1,9 @@
+enum ValueTypes {
+    NotAvailable = 'Not Available',
+    Unknown = 'Unknown',
+    TBD = 'TBD',
+}
+
 type Matches = {
     date: string;
     teams: string[];
@@ -7,48 +13,36 @@ type Matches = {
     series: string;
     eta: string;
     live: 0 | 1 | boolean;
-}[] | { code: 404, status: 'No match information found.' }
+}[] | { code: number, status: string }
 
 type Match = {
     teams: Array<{ name: string; link: string; }>;
     notes: string[];
-    maps: Array<"Pearl", "Ascent", "Fracture", "Breeze", "Haven", "Icebox", "Split">;
-    patch: string;
-    winner: string | undefined;
+    maps: Array<"Pearl" | "Ascent" | "Fracture" | "Breeze" | "Haven" | "Icebox" | "Split"> | ValueTypes.Unknown;
+    patch: string | ValueTypes.Unknown;
+    winner: string | ValueTypes.TBD;
     time: string;
+    status: "Live" | "Upcoming" | ValueTypes.Unknown;
     vods: {
-        fullmatch: string | undefined;
+        fullmatch: string;
         maps: {
-            1: string | undefined;
-            2: string | undefined;
-            3: string | undefined;
-        }
-    } | {};
+            1: string;
+            2: string;
+            3: string;
+        } | ValueTypes.NotAvailable;
+    } | ValueTypes.NotAvailable;
     event: {
-        name: string;
+        name: string | ValueTypes.Unknown;
         series: string;
         image: string;
         link: string;
     }
-} | { code: 404, status: 'No match information found.' }
+} | { code: number, status: string };
 
-MatchValidator = (path: string) => {
-    if (path.includes('/')) {
-        path = path.split('/');
-        const id = path[0];
-        if (isNaN(parseInt(id))) throw Error('Invalid Match ID');
-        continue;
-    } else {
-        const id = path;
-        if (isNaN(parseInt(id))) throw Error('Invalid Match ID');
-        continue;
-    }
-}
-
-class VLR {
-    async getMatch(path: string): Promise<Match>;
-    async getMatches(): Promise<Matches>;
-    async getMatchResults(page?: number | string): Promise<Match>;
+declare class VLR {
+    getMatch(path: string): Promise<Match>;
+    getMatches(): Promise<Matches>;
+    getMatchResults(page?: number | string): Promise<Match>;
 }
 
 export default VLR;

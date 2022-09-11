@@ -186,7 +186,7 @@ async function getMatchResults(page: string) {
 export async function get({ params }) {
     try {
         const results = await getMatchResults(params.page || "1");
-        if (results.length < 1) return new Response(JSON.stringify({ code: 404, status: 'No match information found.' }), {
+        if (results.length < 1) return new Response(JSON.stringify({ code: 404, message: 'No match information found.' }), {
             status: 404,
             statusText: 'No match information found.'
         });
