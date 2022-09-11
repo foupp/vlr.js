@@ -1,28 +1,27 @@
 import DOMParser from "dom-parser";
+const parser = new DOMParser();
+
+enum PageType {
+    Match = 1,
+    Thread = 2,
+}
 
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
 
-const Maps = /Pearl|Fracture|Split|Bind|Ascent|Haven|Icebox|Breeze/g;
+async function getMatch(matchId: string, matchName: string) {
+    const url = `https://www.vlr.gg/${matchId}/${matchName}`;
+    const x = await fetch(url);
 
-async function getMatch(matchId: string) {
-    const parser = new DOMParser();
-
-    if (parseInt(matchId) < 6) return {
-        code: 404,
-        message: "Match not found"
-    }
-
-    const x = await fetch(`https://www.vlr.gg/${matchId}`)
+    console.log(url)
 
     if (x.status === 404) return {
         code: 404,
         message: "Page not found"
     }
 
-    const data = await x.text()
-
+    const data = await x.text();
     const html = parser.parseFromString(data, "text/html");
 
     const divs = html.getElementsByTagName("div");
@@ -191,7 +190,6 @@ async function getMatch(matchId: string) {
         }
     }
 
-    // Change status based on winner or added 'LIVE' note to page
     if (cache.winner !== TBD) cache.status = "Complete";
     else if (cache.notes.includes("LIVE")) cache.status = "Live";
     else if (!cache.notes.includes("LIVE")) cache.status = "Upcoming";
@@ -212,19 +210,35 @@ async function getMatch(matchId: string) {
     if (cache.patch === TBD) cache.patch === Unknown as any;
     if (cache.maps.length < 1) cache.maps = Unknown as any;
     
-    console.log(cache);
+    console.log(cache || 'a');
 
     return cache
 }
 
-export async function get({ params }) {
-    try {
-        const id = params.matchId;
+async function getThread(id: string, name: string) {
+    return {};
+}
 
-        const results = await getMatch(params.matchId);
-        if (!results) return new Response(JSON.stringify({ code: 404, message: 'No match information found.' }), {
+async function identifyPage(id: string, name: string) {
+    const url = `https://www.vlr.gg/${id}/${name}`;
+    const x = await fetch(url);
+    const data = await x.text();
+    const html = parser.parseFromString(data, "text/html");
+
+    const thread = html.getElementsByClassName("thread-header-title") > 0;
+    const match = html.getElementsByClassName("twf-title-med").length > 0;
+
+    if (thread) return PageType.Thread;
+    else if (match) return PageType.Match;
+}
+
+export async function get({ params, request }) {
+    try {
+        const pageType = await identifyPage(params.id, params.name);
+        const results =  request.headers.get('match') ? await getMatch(params.id, params.name) : await getThread(params.id, params.name);
+        if (!results) return new Response(JSON.stringify({ code: 404, message: 'No information found.' }), {
             status: 404,
-            statusText: 'No match information found.'
+            statusText: 'No information found.'
         });
         return new Response(JSON.stringify(results), {
             status: 200
@@ -233,7 +247,7 @@ export async function get({ params }) {
         console.error(error)
         return new Response(JSON.stringify({
             code: 500,
-            message: error.message
+            message: 'There was an error while fetching page information.'
         }), {
             status: 500,
             statusText: error.message

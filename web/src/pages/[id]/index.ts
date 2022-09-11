@@ -1,30 +1,25 @@
 import DOMParser from "dom-parser";
+const parser = new DOMParser();
+
+enum PageType {
+    Match = 1,
+    Thread = 2,
+}
 
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
 
-const Maps = /Pearl|Fracture|Split|Bind|Ascent|Haven|Icebox|Breeze/g;
+async function getMatch(matchId: string) {
 
-async function getMatch(matchId: string, matchName: string) {
-    const parser = new DOMParser();
-
-    if (parseInt(matchId) < 121) return {
-        code: 404,
-        message: "Match not found"
-    }
-
-    const url = `https://www.vlr.gg/${matchId}/${matchName}`;
-    const x = await fetch(url);
-
-    console.log(url)
+    const x = await fetch(`https://www.vlr.gg/${matchId}`)
 
     if (x.status === 404) return {
         code: 404,
         message: "Page not found"
     }
 
-    const data = await x.text();
+    const data = await x.text()
 
     const html = parser.parseFromString(data, "text/html");
 
@@ -194,6 +189,7 @@ async function getMatch(matchId: string, matchName: string) {
         }
     }
 
+    // Change status based on winner or added 'LIVE' note to page
     if (cache.winner !== TBD) cache.status = "Complete";
     else if (cache.notes.includes("LIVE")) cache.status = "Live";
     else if (!cache.notes.includes("LIVE")) cache.status = "Upcoming";
@@ -214,17 +210,34 @@ async function getMatch(matchId: string, matchName: string) {
     if (cache.patch === TBD) cache.patch === Unknown as any;
     if (cache.maps.length < 1) cache.maps = Unknown as any;
     
-    console.log(cache || 'a');
+    if (cache.teams.filter(x => x !== Unknown).length === 0) return { error: 404, message: "This is not a match page." };
 
     return cache
 }
 
-export async function get({ params }) {
+async function getThread(id: string) {
+    return {};
+}
+
+async function identifyPage(id: string) {
+    const url = `https://www.vlr.gg/${id}`;
+    const x = await fetch(url);
+    const data = await x.text();
+    const html = parser.parseFromString(data, "text/html");
+
+    const thread = html.getElementsByClassName("thread-header-title") > 0;
+    const match = html.getElementsByClassName("twf-title-med").length > 0;
+
+    if (thread) return PageType.Thread;
+    else if (match) return PageType.Match;
+}
+
+export async function get({ params, request }) {
     try {
-        const results = await getMatch(params.matchId, params.name);
-        if (!results) return new Response(JSON.stringify({ code: 404, message: 'No match information found.' }), {
+        const results = request.headers.get('match') ? await getMatch(params.id) : await getThread(params.id);
+        if (!results) return new Response(JSON.stringify({ code: 404, message: 'No information found.' }), {
             status: 404,
-            statusText: 'No match information found.'
+            statusText: 'No information found.'
         });
         return new Response(JSON.stringify(results), {
             status: 200
@@ -233,7 +246,7 @@ export async function get({ params }) {
         console.error(error)
         return new Response(JSON.stringify({
             code: 500,
-            message: 'There was an error while fetching the match information.'
+            message: 'There was an error while fetching page information.'
         }), {
             status: 500,
             statusText: error.message

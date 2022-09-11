@@ -1,4 +1,4 @@
-enum ValueTypes {
+export enum ValueTypes {
     NotAvailable = 'Not Available',
     Unknown = 'Unknown',
     TBD = 'TBD',

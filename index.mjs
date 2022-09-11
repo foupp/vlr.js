@@ -18,7 +18,11 @@ class VLR {
     async getMatch(path) {
         MatchValidator(path);
 
-        const res = await request(url(path));
+        const res = await request(url(path), {
+            headers: {
+                match: 1
+            }
+        });
         return res.body.json();
     }
     async getMatches() {
