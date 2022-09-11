@@ -48,14 +48,7 @@ async function getMatch(matchId: string, matchName: string) {
         teams: [],
         notes: [],
         maps: [],
-        vods: {
-            fullmatch: "Not Available",
-            maps: {
-                1: "Not Available",
-                2: "Not Available",
-                3: "Not Available",
-            }
-        },
+        vods: [],
         winner: TBD,
         patch: NotAvailable,
         time: "",
@@ -164,29 +157,10 @@ async function getMatch(matchId: string, matchName: string) {
             const style = vods[i].attributes.find(({ name }) => name === "style");
 
             // Full Match
-            if (style && style.value === "height: 37px; line-height: 37px; padding: 0 20px; margin: 0 3px; margin-bottom: 6px; min-width: 108px; flex: 1;") {
-                cache.vods.fullmatch = vods[i].attributes.find(({ name }) => name === "href").value;
-                vod++;
-            } else if (style && style.value === "height: 37px; line-height: 37px; padding: 0 20px; margin: 0 3px; margin-bottom: 6px; flex: 1;") {
-                vod++;
-                switch (vod) {
-                    case 2: {
-                        cache.vods.maps[1] = vods[i].attributes?.find(({ name }) => name === "href")?.value;
-                        vod++;
-                        break;
-                    }
-                    case 3: {
-                        cache.vods.maps[2] = vods[i].attributes?.find(({ name }) => name === "href")?.value;
-                        vod++;
-                        break;
-                    }
-                    case 4: {
-                        cache.vods.maps[3] = vods[i].attributes?.find(({ name }) => name === "href")?.value;
-                        vod++;
-                        break;
-                    }
-                }
-            }
+            if (style && style.value === "height: 37px; line-height: 37px; padding: 0 20px; margin: 0 3px; margin-bottom: 6px; min-width: 108px; flex: 1;" || 
+                style && style.value === "height: 37px; line-height: 37px; padding: 0 20px; margin: 0 3px; margin-bottom: 6px; flex: 1;") {
+                cache.vods.push(vods[i].attributes.find(({ name }) => name === "href").value);
+            } 
         }
     }
 
@@ -196,16 +170,9 @@ async function getMatch(matchId: string, matchName: string) {
     else cache.status = Unknown;
 
     // Check if any VODS are listed on vlr.gg
-    const vodsExist = Object.values(cache.vods).filter(x => {
-        if (typeof x === 'string' && x === NotAvailable) return false;
-        else if (typeof x === 'object') return Object.values(x).filter(y => y === NotAvailable).length === 0;
-        else return true;
-    }).length === 0;
-    const mapVodsExist = Object.values(cache.vods.maps).filter(x => x === NotAvailable).length === 0;
+    const vodsExist = cache.vods.length === 0;
 
     if (vodsExist) cache.vods = NotAvailable as any;
-    if (cache.vods.fullmatch === NotAvailable) cache.vods.fullmatch = NotAvailable as any;
-    if (mapVodsExist) cache.vods.maps = NotAvailable as any;
     if (cache.event.name === TBD) cache.event.name = Unknown as any;
     if (cache.patch === TBD) cache.patch === Unknown as any;
     if (cache.maps.length < 1) cache.maps = Unknown as any;
