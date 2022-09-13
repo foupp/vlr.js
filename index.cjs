@@ -1,16 +1,32 @@
 const { Client } = require('undici');
-
 const Cli = new Client('https://vlr-js.vercel.app');
 
-module.exports = async function getPage(path) {
-    const res = await request(url(path));
-    return res.body.json();
+module.exports.getPage = async function getPage(path) {
+    const res = await Cli.request({
+        method: 'GET',
+        path
+    });
+    return {
+        data: res.body.json()
+    }
 }
-module.exports = async function getMatches() {
-    const res = await request(url('/matches'));
-    return res.body.json();
+module.exports.getMatches = async function getMatches() {
+    const res = await Cli.request({
+        method: 'GET',
+        path: '/matches'
+    });
+    return {
+        type: 1,
+        data: res.body.json()
+    }
 }
-module.exports = async function getMatchResults(page) {
-    const res = await request(url('/matches/results' + page !== undefined ? `/${page}` : null));
-    return res.body.json();
+module.exports.getMatchResults = async function getMatchResults(page) {
+    const res = await Cli.request({
+        method: 'GET',
+        path: '/matches/results'
+    });
+    return {
+        type: 1,
+        data: res.body.json()
+    }
 }
