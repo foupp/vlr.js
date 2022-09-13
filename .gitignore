@@ -4,6 +4,9 @@ dist/
 # dependencies
 node_modules/
 
+web/node_modules/
+web/.vscode/
+
 # logs
 npm-debug.log*
 yarn-debug.log*
