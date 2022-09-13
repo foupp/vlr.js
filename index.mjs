@@ -8,7 +8,7 @@ export async function getPage(path) {
         path
     });
     return {
-        data: res.body.json()
+        data: await res.body.json()
     }
 }
 export async function getMatches() {
@@ -18,7 +18,7 @@ export async function getMatches() {
     });
     return {
         type: 1,
-        data: res.body.json()
+        data: await res.body.json()
     }
 }
 export async function getMatchResults(page) {
@@ -28,6 +28,6 @@ export async function getMatchResults(page) {
     });
     return {
         type: 1,
-        data: res.body.json()
+        data: await res.body.json()
     }
 }

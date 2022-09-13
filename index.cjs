@@ -7,7 +7,7 @@ module.exports.getPage = async function getPage(path) {
         path
     });
     return {
-        data: res.body.json()
+        data: await res.body.json()
     }
 }
 module.exports.getMatches = async function getMatches() {
@@ -17,7 +17,7 @@ module.exports.getMatches = async function getMatches() {
     });
     return {
         type: 1,
-        data: res.body.json()
+        data: await res.body.json()
     }
 }
 module.exports.getMatchResults = async function getMatchResults(page) {
@@ -27,6 +27,6 @@ module.exports.getMatchResults = async function getMatchResults(page) {
     });
     return {
         type: 1,
-        data: res.body.json()
+        data: await res.body.json()
     }
 }
