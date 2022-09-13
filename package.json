@@ -31,5 +31,8 @@
   "homepage": "https://github.com/vlrjs/vlr.js#readme",
   "dependencies": {
     "undici": "^5.10.0"
+  },
+  "engines": {
+    "node": ">=12.22.12"
   }
 }
