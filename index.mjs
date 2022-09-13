@@ -7,8 +7,14 @@ export async function getPage(path) {
         method: 'GET',
         path
     });
+    const r = await res.body.json()
     return {
-        data: await res.body.json()
+        type: r.type,
+        data: r.data,
+        isForum: () => r.type === 1,
+        isMatch: () => r.type === 2,
+        isTeam: () => r.type === 3,
+        isPlayer: () => r.type === 4
     }
 }
 export async function getMatches() {
@@ -16,9 +22,14 @@ export async function getMatches() {
         method: 'GET',
         path: '/matches'
     });
+    const r = await res.body.json()
     return {
-        type: 1,
-        data: await res.body.json()
+        type: r.type,
+        data: r.data,
+        isForum: () => r.type === 1,
+        isMatch: () => r.type === 2,
+        isTeam: () => r.type === 3,
+        isPlayer: () => r.type === 4
     }
 }
 export async function getMatchResults(page) {
@@ -26,8 +37,13 @@ export async function getMatchResults(page) {
         method: 'GET',
         path: '/matches/results'
     });
+    const r = await res.body.json()
     return {
-        type: 1,
-        data: await res.body.json()
+        type: r.type,
+        data: r.data,
+        isForum: () => r.type === 1,
+        isMatch: () => r.type === 2,
+        isTeam: () => r.type === 3,
+        isPlayer: () => r.type === 4
     }
 }

@@ -184,8 +184,29 @@ async function getMatch(matchId: string, matchName: string) {
     return cache
 }
 
-async function getThread(id: string, name: string) {
-    return {};
+async function getForum(id: string, name: string) {
+    const x = await fetch(`https://www.vlr.gg/${id}/${name}`)
+
+    if (x.status === 404) return {
+        code: 404,
+        message: "Page not found"
+    }
+
+    const data = await x.text()
+
+    const html = parser.parseFromString(data, "text/html");
+
+    const cache = {
+        author: html.getElementsByClassName('post-header-author')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim(),
+        label: html.getElementsByClassName('post-header-label')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim() || "Not Available",
+        threads: html.getElementsByClassName('threading').length,
+        frags: parseInt(html.getElementById('thread-frag-count').textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim())
+    };
+
+    return {
+        type: PageType.Forum,
+        data: cache
+    };
 }
 
 async function identifyPage(id: string, name: string) {
@@ -205,9 +226,8 @@ export async function get({ params }) {
     try {
         const pageType = await identifyPage(params.id, params.name);
         var results;
-        if (pageType === PageType.Forum) results = await getThread(params.id, params.name);
+        if (pageType === PageType.Forum) results = await getForum(params.id, params.name);
         if (pageType === PageType.Match) results = await getMatch(params.id, params.name);
-
         if (!results) return new Response(JSON.stringify({ code: 404, message: 'No information found.' }), {
             status: 404,
             statusText: 'No information found.'

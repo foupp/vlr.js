@@ -46,6 +46,34 @@ export type Match = {
     }
 } | { code: number, status: string };
 
-export async function getPage(path: string): Promise<Match>;
+export type Player = {
+    name: string;
+    alias: string;
+    country: string;
+    winnings: string;
+    links: string[]
+} | { code: number, status: string };
+
+export type Team = {
+    name: string;
+    rank: number;
+    country: string;
+    region: string;
+    winnings: string;
+    roster: Array<{
+        alias: string;
+        name: string;
+    }>;
+    links: string[];
+} | { code: number, status: string };
+
+export async function getPage(path: string): Promise<{
+    type: PageType,
+    data: Match | Team | Player,
+    isForum: () => boolean,
+    isMatch: () => boolean,
+    isTeam: () => boolean,
+    isPlayer: () => boolean
+}>;
 export async function getMatches(): Promise<Matches>;
-export async function getMatchResults(page?: number | string): Promise<Match>;
+export async function getMatchResults(page?: number | string): Promise<Matches>;
