@@ -1,13 +1,15 @@
 import DOMParser from "dom-parser";
 const parser = new DOMParser();
 
-enum PageType {
-    Match = 1,
-    Thread = 2,
+export enum PageType {
+    Forum = 1,
+    Match = 2,
+    Team = 3,
+    Player = 4
 }
 
 function onlyUnique(value, index, self) {
-  return self.indexOf(value) === index;
+    return self.indexOf(value) === index;
 }
 
 async function getMatch(matchId: string, matchName: string) {
@@ -150,17 +152,17 @@ async function getMatch(matchId: string, matchName: string) {
 
             cache.maps = pick;
         }
-    }  
+    }
 
     if (vods.length > 0) {
         for (let i = 0; i < vods.length; i++) {
             const style = vods[i].attributes.find(({ name }) => name === "style");
 
             // Full Match
-            if (style && style.value === "height: 37px; line-height: 37px; padding: 0 20px; margin: 0 3px; margin-bottom: 6px; min-width: 108px; flex: 1;" || 
+            if (style && style.value === "height: 37px; line-height: 37px; padding: 0 20px; margin: 0 3px; margin-bottom: 6px; min-width: 108px; flex: 1;" ||
                 style && style.value === "height: 37px; line-height: 37px; padding: 0 20px; margin: 0 3px; margin-bottom: 6px; flex: 1;") {
                 cache.vods.push(vods[i].attributes.find(({ name }) => name === "href").value);
-            } 
+            }
         }
     }
 
@@ -176,7 +178,7 @@ async function getMatch(matchId: string, matchName: string) {
     if (cache.event.name === TBD) cache.event.name = Unknown as any;
     if (cache.patch === TBD) cache.patch === Unknown as any;
     if (cache.maps.length < 1) cache.maps = Unknown as any;
-    
+
     console.log(cache || 'a');
 
     return cache
@@ -195,14 +197,17 @@ async function identifyPage(id: string, name: string) {
     const thread = html.getElementsByClassName("thread-header-title") > 0;
     const match = html.getElementsByClassName("twf-title-med").length > 0;
 
-    if (thread) return PageType.Thread;
+    if (thread) return PageType.Forum;
     else if (match) return PageType.Match;
 }
 
-export async function get({ params, request }) {
+export async function get({ params }) {
     try {
         const pageType = await identifyPage(params.id, params.name);
-        const results =  request.headers.get('match') ? await getMatch(params.id, params.name) : await getThread(params.id, params.name);
+        var results;
+        if (pageType === PageType.Forum) results = await getThread(params.id, params.name);
+        if (pageType === PageType.Match) results = await getMatch(params.id, params.name);
+
         if (!results) return new Response(JSON.stringify({ code: 404, message: 'No information found.' }), {
             status: 404,
             statusText: 'No information found.'

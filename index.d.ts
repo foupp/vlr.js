@@ -4,7 +4,14 @@ export enum ValueTypes {
     TBD = 'TBD',
 }
 
-type Matches = {
+export enum PageType {
+    Forum = 1,
+    Match = 2,
+    Team = 3,
+    Player = 4
+}
+
+export type Matches = {
     date: string;
     teams: string[];
     time: string;
@@ -15,7 +22,7 @@ type Matches = {
     live: 0 | 1 | boolean;
 }[] | { code: number, status: string }
 
-type Match = {
+export type Match = {
     teams: Array<{ name: string; link: string; }>;
     notes: string[];
     maps: Array<"Pearl" | "Ascent" | "Fracture" | "Breeze" | "Haven" | "Icebox" | "Split"> | ValueTypes.Unknown;
@@ -39,10 +46,6 @@ type Match = {
     }
 } | { code: number, status: string };
 
-declare class VLR {
-    getMatch(path: string): Promise<Match>;
-    getMatches(): Promise<Matches>;
-    getMatchResults(page?: number | string): Promise<Match>;
-}
-
-export default VLR;
+export async function getPage(path: string): Promise<Match>;
+export async function getMatches(): Promise<Matches>;
+export async function getMatchResults(page?: number | string): Promise<Match>;

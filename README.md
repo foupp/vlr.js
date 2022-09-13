@@ -31,7 +31,7 @@ console.log(VLR.getMatch('130621'))
 
 ## API Reference
 
-### getMatch(path)
+### getPage(path)
 
 `path:` string or  number - The path of the match found on [vlr.gg](https://www.vlr.gg/) (e.g. `/130621`)
 
