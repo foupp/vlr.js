@@ -219,7 +219,7 @@ async function identifyPage(id: string) {
     const html = parser.parseFromString(data, "text/html");
 
     const thread = html.getElementsByClassName("thread-header-title").length > 0;
-    const match = html.getElementsByClassName("twf-title-med").length > 0;
+    const match = html.getElementsByClassName("wf-title-med").length > 0;
 
     if (thread) return PageType.Forum;
     else if (match) return PageType.Match;
