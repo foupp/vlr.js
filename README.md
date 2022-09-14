@@ -33,7 +33,7 @@ console.log(VLR.getMatch('130621'))
 
 ### getPage(path)
 
-`path:` string or  number - The path of the match found on [vlr.gg](https://www.vlr.gg/) (e.g. `/130621`)
+`path:` string or  number - The path of a match, team, player or forum on [vlr.gg](https://www.vlr.gg/) (e.g. `/130621`)
 
 ### getMatches()
 
@@ -53,5 +53,4 @@ Get live match and upcoming matches from [vlr.gg](https://www.vlr.gg/matches)
 
 ## Roadmap
 
-- Add additional functions to get more information from [vlr.gg](https://www.vlr.gg/) site (e.g. `getTeam`, `getPlayer`, etc.)
 - Match 'match' types (e.g. a match of `getMatches` does not have the same type as `getMatch`)
