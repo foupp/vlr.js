@@ -198,7 +198,7 @@ async function getForum(id: string, name: string) {
 
     const cache = {
         author: html.getElementsByClassName('post-header-author')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim(),
-        label: html.getElementsByClassName('post-header-label')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim() || "Not Available",
+        label: html.getElementsByClassName('post-header-label')[0]?.textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim() || "Not Available",
         threads: html.getElementsByClassName('threading').length,
         frags: parseInt(html.getElementById('thread-frag-count').textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim())
     };

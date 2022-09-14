@@ -57,7 +57,7 @@ async function getTeam(id: string) {
         name: name || NotAvailable,
         rank: html.getElementsByClassName('rank-num').length > 0 ? parseInt(html.getElementsByClassName('rank-num')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim()) : "Not Available",
         country: html.getElementsByClassName('team-header-country').length > 0 ? html.getElementsByClassName('team-header-country')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim() : "Not Available",
-        region: html.getElementsByClassName('rating-txt') > 0 ? html.getElementsByClassName('rating-txt')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim() : "Not Available",
+        region: html.getElementsByClassName('rating-txt').length > 0 ? html.getElementsByClassName('rating-txt')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim() : "Not Available",
         winnings: html.getElementsByTagName('span').find(x => x.attributes.find(a => a.name === "style" && a.value === `font-size: 22px; font-weight: 500;`))?.textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim(),
         roster: e.length > 0 ? e : "Not Available",
         links: d.length > 0 ? d : "Not Available",
