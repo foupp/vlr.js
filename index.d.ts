@@ -50,24 +50,24 @@ export type Player = {
     name: string;
     alias: string;
     country: string;
-    winnings: string;
-    links: string[]
+    winnings: string | ValueTypes.NotAvailable;
+    links: string[] | ValueTypes.NotAvailable
 } | { code: number, status: string };
 
 export type Team = {
     name: string;
-    rank: number;
+    rank: number | ValueTypes.NotAvailable;
     country: string;
-    region: string;
-    winnings: string;
+    region: string | ValueTypes.NotAvailable;
+    winnings: string | ValueTypes.NotAvailable;
     roster: Array<{
         alias: string;
         name: string;
-    }>;
-    links: string[];
+    }> | ValueTypes.NotAvailable;
+    links: string[] | ValueTypes.NotAvailable;
 } | { code: number, status: string };
 
-export async function getPage(path: string): Promise<{
+export function getPage(path: string): Promise<{
     type: PageType,
     data: Match | Team | Player,
     isForum: () => boolean,
@@ -75,5 +75,5 @@ export async function getPage(path: string): Promise<{
     isTeam: () => boolean,
     isPlayer: () => boolean
 }>;
-export async function getMatches(): Promise<Matches>;
-export async function getMatchResults(page?: number | string): Promise<Matches>;
+export function getMatches(): Promise<Matches>;
+export function getMatchResults(page?: number | string): Promise<Matches>;

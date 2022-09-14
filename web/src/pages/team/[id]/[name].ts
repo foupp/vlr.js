@@ -12,9 +12,9 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
-async function getTeam(id: string, _name: string) {
+async function getTeam(id: string) {
 
-    const x = await fetch(`https://www.vlr.gg/team/${id}/${_name}`)
+    const x = await fetch(`https://www.vlr.gg/team/${id}`)
 
     if (x.status === 404) return {
         code: 404,
@@ -47,7 +47,7 @@ async function getTeam(id: string, _name: string) {
     const e = [];
 
     for (let i = 0; i < aliases.length; i++) {
-        e.push({
+        if (aliases[i] && realnames[i]) e.push({
             alias: aliases[i],
             name: realnames[i]
         })
@@ -55,12 +55,12 @@ async function getTeam(id: string, _name: string) {
 
     const cache = {
         name: name || NotAvailable,
-        rank: parseInt(html.getElementsByClassName('rank-num')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim()),
-        country: html.getElementsByClassName('team-header-country')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim(),
-        region: html.getElementsByClassName('rating-txt')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim(),
-        winnings: html.getElementsByTagName('span').find(x => x.attributes.find(a => a.name === "style" && a.value === `font-size: 22px; font-weight: 500;`)).textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim(),
-        roster: e,
-        links: d,
+        rank: html.getElementsByClassName('rank-num').length > 0 ? parseInt(html.getElementsByClassName('rank-num')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim()) : "Not Available",
+        country: html.getElementsByClassName('team-header-country').length > 0 ? html.getElementsByClassName('team-header-country')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim() : "Not Available",
+        region: html.getElementsByClassName('rating-txt') > 0 ? html.getElementsByClassName('rating-txt')[0].textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim() : "Not Available",
+        winnings: html.getElementsByTagName('span').find(x => x.attributes.find(a => a.name === "style" && a.value === `font-size: 22px; font-weight: 500;`))?.textContent.replace(/(\r\n|\n|\r|\t)/gm, '').trim(),
+        roster: e.length > 0 ? e : "Not Available",
+        links: d.length > 0 ? d : "Not Available",
     };
 
     return {
@@ -71,7 +71,7 @@ async function getTeam(id: string, _name: string) {
 
 export async function get({ params }) {
     try {
-        var results = await getTeam(params.id, params.name);
+        var results = await getTeam(params.id);
         if (!results) return new Response(JSON.stringify({ code: 404, message: 'No information found.' }), {
             status: 404,
             statusText: 'No information found.'
