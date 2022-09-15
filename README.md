@@ -1,11 +1,11 @@
-
-# vlr.js
+# VLR.js
 
 Get live information from [vlr.gg](https://www.vlr.gg/) (Valorant esports coverage)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-### ⚠️⚠️ Some pages on [vlr.gg](https://www.vlr.gg/) may have issues when fetching data from their site ⚠️⚠️
+### *NEW*: Get all region's rankings using `.getPage('/rankings')`
+ ⚠️⚠️ Some pages on [vlr.gg](https://www.vlr.gg/) may have issues when fetching data from their site ⚠️⚠️
 
 ---
 
@@ -22,9 +22,7 @@ Install `vlr.js` with npm
 ```javascript
 import vlr from 'vlr.js'
 
-const VLR = new vlr()
-
-console.log(VLR.getMatch('130621'))
+console.log(await VLR.getMatch('130621'))
 ```
 
 ---
@@ -54,3 +52,4 @@ Get live match and upcoming matches from [vlr.gg](https://www.vlr.gg/matches)
 ## Roadmap
 
 - Match 'match' types (e.g. a match of `getMatches` does not have the same type as `getMatch`)
+- Add specific rank pages
