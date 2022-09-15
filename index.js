@@ -1,7 +1,8 @@
-const { Client } = require('undici');
+import { Client } from 'undici'
+
 const Cli = new Client('https://vlr-js.vercel.app');
 
-module.exports.getPage = async function getPage(path) {
+export async function getPage(path) {
     const res = await Cli.request({
         method: 'GET',
         path
@@ -9,10 +10,14 @@ module.exports.getPage = async function getPage(path) {
     const r = await res.body.json()
     return {
         type: r.type,
-        data: r.data
+        data: r.data,
+        isForum: () => r.type === 1,
+        isMatch: () => r.type === 2,
+        isTeam: () => r.type === 3,
+        isPlayer: () => r.type === 4
     }
 }
-module.exports.getMatches = async function getMatches() {
+export async function getMatches() {
     const res = await Cli.request({
         method: 'GET',
         path: '/matches'
@@ -27,7 +32,7 @@ module.exports.getMatches = async function getMatches() {
         isPlayer: () => r.type === 4
     }
 }
-module.exports.getMatchResults = async function getMatchResults(page) {
+export async function getMatchResults(page) {
     const res = await Cli.request({
         method: 'GET',
         path: '/matches/results'
