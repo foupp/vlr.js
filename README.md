@@ -18,7 +18,7 @@
 ## Installation
 
 ```bash
->  npm install vlr.js
+npm install vlr.js
 ```
 
 ## Example
