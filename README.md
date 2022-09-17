@@ -1,8 +1,17 @@
-# VLR.js
+<div align="center">
+  <br />
+  <p>
+    <a href="https://discord.js.org"><img src="https://i.ibb.co/bsDwFD4/vlrjs-banner.png" width="546" alt="vlr.js" /></a>
+  </p>
+  <br />
+  <p>
+     <img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="MIT License" />
+     <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/vlr.js?style=flat-square" alt="Bundle Size">
+     <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/tag/vlrjs/vlr.js?style=flat-square" alt="Latest Version">
+  </p>
+</div>
 
 Get live information from [vlr.gg](https://www.vlr.gg/) (Valorant esports coverage)
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 ### *NEW*: Get all region's rankings using `.getPage('/rankings')`
  ⚠️⚠️ Some pages on [vlr.gg](https://www.vlr.gg/) may have issues when fetching data from their site ⚠️⚠️
