@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/vlrjs/vlr.js/issues"
   },
-  "homepage": "https://github.com/vlrjs/vlr.js#readme",
+  "homepage": "https://vlr.js.org",
   "dependencies": {
     "undici": "^5.10.0"
   },
