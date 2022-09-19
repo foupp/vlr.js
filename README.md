@@ -47,7 +47,7 @@ console.log({
 ### getPage(path)
 
 \*default function\*<br />
-__path:__ String/Integer - Any path found from [vlr.gg](https://www.vlr.gg/)
+__path:__ String - Any path found from [vlr.gg](https://www.vlr.gg/)
 
 ### getMatches()
 
