@@ -23,11 +23,12 @@ module.exports = async function getPage(path) {
         return {
             type: r.type,
             data: r.data,
-        isForum: () => r.type === 1,
-        isMatch: () => r.type === 2,
-        isTeam: () => r.type === 3,
-        isPlayer: () => r.type === 4,
-        isRankings: () => r.type === 5,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
         }
     } catch (e) {
         const r = await res.body.text();
@@ -67,8 +68,33 @@ module.exports.getMatchResults = async function getMatchResults(page) {
     try {
         const r = await res.body.json()
         if (r.error) return r;
-        return r
+        return {
+            type: r.type,
+            data: r.data
+        }
     } catch (e) {
         throw e;
+    }
+}
+module.exports.getRankings = async function getRankings() {
+    const res = await Cli.request({
+        method: 'GET',
+        path: '/rankings'
+    });
+    try {
+        const r = await res.body.json()
+        if (r.error) return r;
+        return {
+            type: r.type,
+            data: r.data
+        }
+    } catch (e) {
+        try {
+            const r = await res.body.text();
+            if (r) console.error(r)
+            else throw e;
+        } catch (_e) {
+            throw _e;
+        }
     }
 }
