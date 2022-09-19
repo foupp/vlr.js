@@ -17,6 +17,7 @@
 
 ## Installation
 
+### **Node v12.22.12 or above is required**
 ```bash
 npm install vlr.js
 ```
@@ -26,11 +27,11 @@ npm install vlr.js
 ```typescript
 import vlr from 'vlr.js'
 
-const match = vlr.getPage('/6');
-const forum = vlr.getPage('/1');
-const team = vlr.getPage('/team/2');
-const player = vlr.getPage('/player/9');
-const rankings = vlr.getPage('/rankings');
+const match = vlr('/6');
+const forum = vlr('/1');
+const team = vlr('/team/2');
+const player = vlr('/player/9');
+const rankings = vlr('/rankings');
 
 console.log({
     match,
@@ -45,7 +46,8 @@ console.log({
 
 ### getPage(path)
 
-__path:__ String/Integer - The path of a match, team, player or forum from [vlr.gg](https://www.vlr.gg/)
+\*default function\*<br />
+__path:__ String/Integer - Any path found from [vlr.gg](https://www.vlr.gg/)
 
 ### getMatches()
 
@@ -65,5 +67,4 @@ __page:__ String/Integer (**optional**) - Specific page number to search matches
 
 ## Roadmap
 
-- Match types for Matches
 - Add specific rank pages

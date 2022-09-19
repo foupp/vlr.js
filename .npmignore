@@ -1,6 +1,5 @@
 web/
 .github/
-package-lock.json
 LICENSE.md
 .vscode/
 .npmrc
