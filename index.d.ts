@@ -139,8 +139,23 @@ export interface Rankings {
     isRankings: () => true,
 }
 
+/**
+ * Get information from any (soon) page from [vlr.gg](https://www.vlr.gg)
+ * @param path Path from [vlr.gg](https://www.vlr.gg) you want to fetch
+ */
 export default function getPage(path: `/${string}`): Promise<Match | Player | Team | Forum | Rankings | Matches | Error>;
 
+/**
+ * Get all upcoming/live matches - [vlr.gg/matches](https://www.vlr.gg/matches)
+ */
 export function getMatches(): Promise<Matches | Error>;
+
+/**
+ * Get all completed matches - [vlr.gg/matches/results](https://www.vlr.gg/matches/results)
+ */
 export function getMatchResults(page?: number | string): Promise<Matches | Error>;
+
+/**
+ * Get current region rankings - [vlr.gg/rankings](https://www.vlr.gg/rankings)
+ */
 export function getRankings(): Promise<Rankings | Error>;
