@@ -27,7 +27,10 @@ export interface Match {
     notes: string[];
     maps: Array<"Pearl" | "Ascent" | "Fracture" | "Breeze" | "Haven" | "Icebox" | "Split"> | ValueTypes.Unknown;
     patch: string | ValueTypes.Unknown;
-    winner: string | ValueTypes.TBD;
+    winner: {
+        name: string,
+        link: string,
+    } | ValueTypes.TBD;
     time: string;
     status: "Live" | "Upcoming" | ValueTypes.Unknown;
     vods: {
