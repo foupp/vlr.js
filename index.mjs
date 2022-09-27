@@ -20,7 +20,11 @@ export default async function getPage(path) {
     });
     try {
         const r = await res.body.json();
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data,
@@ -44,7 +48,11 @@ export async function getMatches() {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -56,9 +64,9 @@ export async function getMatches() {
     }
 }
 export async function getMatchResults(page) {
-    if (typeof page === "number" && page < 1) throw new ValidationError("Page parameter must be number greater than 0")
-    if (typeof page === "string" && _.isNumber(_.toNumber(page))) page = _.toNumber(page);
-    else throw new ValidationError("Page parameter must be a number by itself OR a number in a string")
+    if (page && typeof page === "number" && page < 1) throw new ValidationError("Page parameter must be number greater than 0")
+    if (page && typeof page === "string" && _.isNumber(_.toNumber(page))) page = _.toNumber(page);
+    else if (page) throw new ValidationError("Page parameter must be a number by itself OR a number in a string")
         
     const res = await Cli.request({
         method: 'GET',
@@ -69,7 +77,11 @@ export async function getMatchResults(page) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -92,7 +104,11 @@ export async function getRankings(region) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -115,7 +131,11 @@ export async function getEvents(region) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -133,11 +153,15 @@ export async function getEvents(region) {
 export async function getPlayers() {
     const res = await Cli.request({
         method: 'GET',
-        path: `/players/others`
+        path: `/players/other`
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -160,7 +184,11 @@ export async function getPlayer(id) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -183,7 +211,11 @@ export async function getEvent(id) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data

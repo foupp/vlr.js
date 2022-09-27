@@ -1,3 +1,5 @@
+// <reference types="typescript" />
+
 export enum Fillers {
     NotAvailable = 'Not Available',
     Unknown = 'Unknown',
@@ -36,7 +38,7 @@ type MatchResultsData = Array<{
     eta: string;
 }>
 
-interface MatchData {
+type MatchData = {
     teams: Array<{ name: string; link: string; }>;
     notes: string[];
     maps: Array<"Pearl" | "Ascent" | "Fracture" | "Breeze" | "Haven" | "Icebox" | "Split"> | Fillers.Unknown;
@@ -82,7 +84,7 @@ type PlayersData = Array<{
     }
 }>;
 
-interface PlayerData {
+type PlayerData = {
     name: string;
     alias: string;
     country: string;
@@ -100,7 +102,7 @@ type EventsData = Array<{
     thumb: `https://${string}`;
 }>
 
-interface EventData {
+type EventData = {
     title: string;
     description: string;
     dates: string;
@@ -113,9 +115,13 @@ interface EventData {
     series?: string;
 }
 
-declare interface Error { code: number, status: string }
+type ReqError = {
+    error: true,
+    code: r.code,
+    message: r.message
+}
 
-interface TeamData {
+type TeamDat = {
     name: string;
     rank: number | Fillers.NotAvailable;
     country: string;
@@ -128,7 +134,7 @@ interface TeamData {
     links: string[] | Fillers.NotAvailable;
 }
 
-interface ForumData {
+type ForumData = {
     author: string,
     label: string | Fillers.NotAvailable,
     threads: number,
@@ -144,7 +150,7 @@ type RankingsData = Array<{
     }>
 }>
 
-export interface Match {
+export type Match = {
     type: PageType.Match,
     data: Match,
     isForum: () => false,
@@ -158,7 +164,7 @@ export interface Match {
     isPlayers: () => false,
 }
 
-export interface Player {
+export type Player = {
     type: PageType.Player,
     data: Player,
     isForum: () => false,
@@ -172,7 +178,7 @@ export interface Player {
     isPlayers: () => false,
 }
 
-export interface Team {
+export type Team = {
     type: PageType.Team
     data: TeamData,
     isForum: () => false,
@@ -186,7 +192,7 @@ export interface Team {
     isPlayers: () => false,
 }
 
-export interface Forum {
+export type Forum = {
     type: PageType.Forum,
     data: ForumData,
     isForum: () => true,
@@ -200,7 +206,7 @@ export interface Forum {
     isPlayers: () => false,
 }
 
-export interface Rankings {
+export type Rankings = {
     type: PageType.Rankings,
     data: RankingsData,
     isForum: () => false,
@@ -214,7 +220,7 @@ export interface Rankings {
     isPlayers: () => false,
 }
 
-export interface Matches {
+export type Matches = {
     type: PageType.Matches,
     data: MatchesData,
     isForum: () => false,
@@ -228,7 +234,7 @@ export interface Matches {
     isPlayers: () => false,
 }
 
-export interface MatchResults {
+export type MatchResults = {
     type: PageType.Matches,
     data: MatchResultsData,
     isForum: () => false,
@@ -242,7 +248,7 @@ export interface MatchResults {
     isPlayers: () => false,
 }
 
-export interface Events {
+export type Events = {
     type: PageType.Events,
     data: EventsData,
     isForum: () => false,
@@ -256,7 +262,7 @@ export interface Events {
     isPlayers: () => false,
 }
 
-export interface Event {
+export type Event = {
     type: PageType.Event,
     data: EventData,
     isForum: () => false,
@@ -270,7 +276,7 @@ export interface Event {
     isPlayers: () => false,
 }
 
-export interface Players {
+export type Players = {
     type: PageType.Players,
     data: PlayersData,
     isForum: () => false,
@@ -288,42 +294,42 @@ export interface Players {
  * Get information from any (soon!) page from [vlr.gg](https://www.vlr.gg)
  * @param path Path from [vlr.gg](https://www.vlr.gg) you want to fetch
  */
-export default function getPage(path: `/${string}`): Promise<Match | Player | Team | Forum | Rankings | Matches | Error>;
+export default function getPage(path: `/${string}`): Promise<Match | Player | Team | Forum | Rankings | Matches  | Players | Events | Event | ReqError>;
 
 /**
  * Get all upcoming/live matches - [vlr.gg/matches](https://www.vlr.gg/matches)
  */
-export function getMatches(): Promise<Matches | Error>;
+export function getMatches(): Promise<Matches | ReqError>;
 
 /**
  * Get all completed matches - [vlr.gg/matches/results](https://www.vlr.gg/matches/results)
  */
-export function getMatchResults(page?: number | string): Promise<MatchResults | Error>;
+export function getMatchResults(page?: number | string): Promise<MatchResults | ReqError>;
 
 /**
  * Get top 10 or all rankings of each region (Max 10 teams per region) [vlr.gg/rankings](https://www.vlr.gg/rankings)
  */
-export function getRankings(): Promise<Rankings | Error>;
+export function getRankings(): Promise<Rankings | ReqError>;
 
 /**
  * Get upcoming, completed, and ongoings events [vlr.gg/events](https://www.vlr.gg/events)
  * @param region Get events from a specific region
  */
-export function getEvents(region?: string): Promise<Events | Error>;
+export function getEvents(region?: string): Promise<Events | ReqError>;
 
 /**
  * View information on a specific event
  * @param id The ID of the event (ex. `/1`)
  */
-export function getEvent(id: number | string): Promise<Event | Error>;
+export function getEvent(id: number | string): Promise<Event | ReqError>;
 
 /**
- * View all personal that either rostered or free [vlr.gg/players/others](https://www.vlr.gg/players/others)
+ * View all personal that either rostered or free [vlr.gg/players/other](https://www.vlr.gg/players/other)
  */
-export function getPlayers(): Promise<Players | Error>;
+export function getPlayers(): Promise<Players | ReqError>;
 
 /**
  * View information on a specific player
  * @param id The ID of the player (ex. `/1`)
  */
-export function getPlayer(id: number | string): Promise<Player | Error>;
+export function getPlayer(id: number | string): Promise<Player | ReqError>;

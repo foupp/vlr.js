@@ -1,6 +1,6 @@
 {
   "name": "vlr.js",
-  "version": "1.4.1",
+  "version": "1.4.11",
   "description": "Fetch live information from vlr.gg (Valorant esports coverage)",
   "module": "./index.mjs",
   "main": "./index.js",
@@ -14,7 +14,7 @@
   },
   "type": "module",
   "scripts": {
-    "test": "node index.js"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -30,8 +30,8 @@
   },
   "homepage": "https://vlr.js.org",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "undici": "^5.10.0"
+    "lodash": "latest",
+    "undici": "latest"
   },
   "engines": {
     "node": ">=12.22.12"
