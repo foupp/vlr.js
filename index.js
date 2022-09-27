@@ -67,9 +67,9 @@ export async function getMatches() {
     }
 }
 export async function getMatchResults(page) {
-    if (typeof page === "number" && page < 1) throw new ValidationError("Page parameter must be number greater than 0")
-    if (typeof page === "string" && _.isNumber(_.toNumber(page))) page = _.toNumber(page);
-    else throw new ValidationError("Page parameter must be a number by itself OR a number in a string")
+    if (page && typeof page === "number" && page < 1) throw new ValidationError("Page parameter must be number greater than 0")
+    if (page && typeof page === "string" && _.isNumber(_.toNumber(page))) page = _.toNumber(page);
+    else if (page) throw new ValidationError("Page parameter must be a number by itself OR a number in a string")
         
     const res = await Cli.request({
         method: 'GET',
