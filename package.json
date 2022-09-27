@@ -30,8 +30,8 @@
   },
   "homepage": "https://vlr.js.org",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "undici": "^5.10.0"
+    "lodash": "latest",
+    "undici": "latest"
   },
   "engines": {
     "node": ">=12.22.12"

@@ -20,7 +20,11 @@ export default async function getPage(path) {
     });
     try {
         const r = await res.body.json();
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data,
@@ -30,6 +34,9 @@ export default async function getPage(path) {
             isPlayer: () => r.type === 4,
             isRankings: () => r.type === 5,
             isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         }
     } catch (e) {
         const r = await res.body.text();
@@ -44,7 +51,11 @@ export async function getMatches() {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -69,7 +80,11 @@ export async function getMatchResults(page) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -88,7 +103,11 @@ export async function getRankings(region) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -111,7 +130,11 @@ export async function getEvents(region) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -129,11 +152,15 @@ export async function getEvents(region) {
 export async function getPlayers() {
     const res = await Cli.request({
         method: 'GET',
-        path: `/players/others`
+        path: `/players/other`
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -156,7 +183,11 @@ export async function getPlayer(id) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -179,7 +210,11 @@ export async function getEvent(id) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data

@@ -20,7 +20,11 @@ export default async function getPage(path) {
     });
     try {
         const r = await res.body.json();
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data,
@@ -44,7 +48,11 @@ export async function getMatches() {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -69,7 +77,11 @@ export async function getMatchResults(page) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -92,7 +104,11 @@ export async function getRankings(region) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -115,7 +131,11 @@ export async function getEvents(region) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -133,11 +153,15 @@ export async function getEvents(region) {
 export async function getPlayers() {
     const res = await Cli.request({
         method: 'GET',
-        path: `/players/others`
+        path: `/players/other`
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -160,7 +184,11 @@ export async function getPlayer(id) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
@@ -183,7 +211,11 @@ export async function getEvent(id) {
     });
     try {
         const r = await res.body.json()
-        if (r.error) return r;
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
         return {
             type: r.type,
             data: r.data
