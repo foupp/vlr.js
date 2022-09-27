@@ -1,4 +1,5 @@
 const { Client } = require('undici')
+const _ = require('lodash')
 
 class ValidationError extends Error {
   constructor(message) {
@@ -148,7 +149,7 @@ module.exports.getPlayer = async function getPlayer(id) {
     if (typeof id !== "string" && typeof id !== "number") throw new ValidationError("Parameter 'id' is not a string or number")
     const res = await Cli.request({
         method: 'GET',
-        path: id.startsWith('/') ? `/player${id}` : `/player/${id}`
+        path: typeof id === "string" && id.startsWith('/') ? `/player${id}` : `/player/${id}`
     });
     try {
         const r = await res.body.json()
@@ -171,7 +172,7 @@ module.exports.getEvent = async function getEvent(id) {
     if (typeof id !== "string" && typeof id !== "number") throw new ValidationError("Parameter 'id' is not a string or number")
     const res = await Cli.request({
         method: 'GET',
-        path: id.startsWith('/') ? `/event${id}` : `/event/${id}`
+        path: typeof id === "string" && id.startsWith('/') ? `/event${id}` : `/event/${id}`
     });
     try {
         const r = await res.body.json()
