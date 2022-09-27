@@ -3,15 +3,6 @@
   <p>
     <a href="https://vlr.js.org"><img src="https://i.ibb.co/bsDwFD4/vlrjs-banner.png" width="546" alt="vlr.js" /></a>
   </p>
-  <br />
-  <p>
-     <img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="MIT License" />
-     <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/vlr.js?style=flat-square" alt="Bundle Size">
-     <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/tag/vlrjs/vlr.js?style=flat-square" alt="Latest Version">
-     <br />
-      <br />
-     <h3>Get live information from <a href="https://www.vlr.gg/">vlr.gg</a>
-  </p>
 </div>
 
 
@@ -27,36 +18,28 @@ npm install vlr.js
 ```typescript
 import vlr from 'vlr.js'
 
-const match = vlr('/6');
-const forum = vlr('/1');
-const team = vlr('/team/2');
-const player = vlr('/player/9');
-const rankings = vlr('/rankings');
+const match = vlr('/6'); /* Match */
+const matchResults = vlr.getMatchResults(); /* Match Results */
+const forum = vlr('/1'); /* Forum */
+const team = vlr('/team/2'); /* getTeam() coming soon... */
+const player = vlr.getPlayer(9); /* Player */
+const players = vlr.getPlayers(); /* All players/staff */
+const rankings = vlr.getRankings(); /* World rankings */
+const events = vlr.getEvents(); /* All upcoming, ongoing and completed events */
+const event = vlr.getEvent(1187); /* Specific event */
 
 console.log({
     match,
+    matchResults,
     forum,
     team,
     player,
-    rankings
+    players,
+    rankings,
+    events,
+    event
 });
 ```
-
-## API Reference
-
-### getPage(path)
-
-\*default function\*<br />
-__path:__ String - Any path found from [vlr.gg](https://www.vlr.gg/)
-
-### getMatches()
-
-Get live match and upcoming matches from [vlr.gg/matches](https://www.vlr.gg/matches)
-
-### getMatcheResults(page)
-
-__page:__ String/Integer (**optional**) - Specific page number to search matches
-
 ### Error Response
 
 ```ts
@@ -67,4 +50,5 @@ __page:__ String/Integer (**optional**) - Specific page number to search matches
 
 ## Roadmap
 
-- Add specific rank pages
+- Add `getTeam` function
+- Add threads and forum index

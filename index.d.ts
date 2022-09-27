@@ -1,4 +1,4 @@
-export enum FillerTypes {
+export enum Fillers {
     NotAvailable = 'Not Available',
     Unknown = 'Unknown',
     TBD = 'TBD',
@@ -11,6 +11,9 @@ export enum PageType {
     Player = 4,
     Rankings = 5,
     Matches = 6,
+    Event = 7,
+    Events = 8,
+    Players = 9,
 }
 
 type MatchesData = Array<{
@@ -36,56 +39,98 @@ type MatchResultsData = Array<{
 interface MatchData {
     teams: Array<{ name: string; link: string; }>;
     notes: string[];
-    maps: Array<"Pearl" | "Ascent" | "Fracture" | "Breeze" | "Haven" | "Icebox" | "Split"> | FillerTypes.Unknown;
-    patch: string | FillerTypes.Unknown;
+    maps: Array<"Pearl" | "Ascent" | "Fracture" | "Breeze" | "Haven" | "Icebox" | "Split"> | Fillers.Unknown;
+    patch: string | Fillers.Unknown;
     winner: {
         name: string,
         link: string,
-    } | FillerTypes.TBD;
+    } | Fillers.TBD;
     time: string;
-    status: "Live" | "Upcoming" | "Complete" | FillerTypes.Unknown;
+    status: "Live" | "Upcoming" | "Complete" | Fillers.Unknown;
     vods: {
         fullmatch: string;
         maps: {
             1: string;
             2: string;
             3: string;
-        } | FillerTypes.NotAvailable;
-    } | FillerTypes.NotAvailable;
+        } | Fillers.NotAvailable;
+    } | Fillers.NotAvailable;
     event: {
-        name: string | FillerTypes.Unknown;
+        name: string | Fillers.Unknown;
         series: string;
         image: string;
         link: string;
     }
 }
 
+type PlayersData = Array<{
+    player: {
+        alias: string;
+        name: string;
+        position: "Player" | "Analyst" | "Manager" | "Assistant coach" | "Head coach" | "Coach" | string | Fillers.NotAvailable;
+        currentTeam: {
+            name: string | Fillers.NotAvailable;
+            link: `/${string}`;
+        };
+        previousTeam: {
+            name: string | Fillers.NotAvailable;
+            link: `/${string}` | Fillers.NotAvailable;
+        };
+        social: Array<string> | Fillers.NotAvailable;
+        origin: Intl.DisplayNames | string;
+        winnings: `$${string}`
+    }
+}>;
+
 interface PlayerData {
     name: string;
     alias: string;
     country: string;
-    winnings: string | FillerTypes.NotAvailable;
-    links: string[] | FillerTypes.NotAvailable
+    winnings: string | Fillers.NotAvailable;
+    links: string[] | Fillers.NotAvailable
+}
+
+type EventsData = Array<{
+    link: `/${string}`;
+    title: string;
+    status: "Completed" | "Upcoming" | "Ongoing";
+    prizepool: `$${number}`;
+    dates: string;
+    region: string;
+    thumb: `https://${string}`;
+}>
+
+interface EventData {
+    title: string;
+    description: string;
+    dates: string;
+    prize: string;
+    stages: Array<{
+        dates: string;
+        name: string;
+    }>;
+    avatar: string;
+    series?: string;
 }
 
 declare interface Error { code: number, status: string }
 
 interface TeamData {
     name: string;
-    rank: number | FillerTypes.NotAvailable;
+    rank: number | Fillers.NotAvailable;
     country: string;
-    region: string | FillerTypes.NotAvailable;
-    winnings: string | FillerTypes.NotAvailable;
+    region: string | Fillers.NotAvailable;
+    winnings: string | Fillers.NotAvailable;
     roster: Array<{
         alias: string;
         name: string;
-    }> | FillerTypes.NotAvailable;
-    links: string[] | FillerTypes.NotAvailable;
+    }> | Fillers.NotAvailable;
+    links: string[] | Fillers.NotAvailable;
 }
 
 interface ForumData {
     author: string,
-    label: string | FillerTypes.NotAvailable,
+    label: string | Fillers.NotAvailable,
     threads: number,
     frags: number
 }
@@ -108,6 +153,9 @@ export interface Match {
     isPlayer: () => false,
     isRankings: () => false,
     isMatches: () => true,
+    isEvent: () => false,
+    isEvents: () => false,
+    isPlayers: () => false,
 }
 
 export interface Player {
@@ -119,6 +167,9 @@ export interface Player {
     isPlayer: () => true,
     isRankings: () => false,
     isMatches: () => true,
+    isEvent: () => false,
+    isEvents: () => false,
+    isPlayers: () => false,
 }
 
 export interface Team {
@@ -130,6 +181,9 @@ export interface Team {
     isPlayer: () => false,
     isRankings: () => false,
     isMatches: () => true,
+    isEvent: () => false,
+    isEvents: () => false,
+    isPlayers: () => false,
 }
 
 export interface Forum {
@@ -141,6 +195,9 @@ export interface Forum {
     isPlayer: () => false,
     isRankings: () => false,
     isMatches: () => true,
+    isEvent: () => false,
+    isEvents: () => false,
+    isPlayers: () => false,
 }
 
 export interface Rankings {
@@ -152,6 +209,9 @@ export interface Rankings {
     isPlayer: () => false,
     isRankings: () => true,
     isMatches: () => true,
+    isEvent: () => false,
+    isEvents: () => false,
+    isPlayers: () => false,
 }
 
 export interface Matches {
@@ -163,6 +223,9 @@ export interface Matches {
     isPlayer: () => false,
     isRankings: () => false,
     isMatches: () => true,
+    isEvent: () => false,
+    isEvents: () => false,
+    isPlayers: () => false,
 }
 
 export interface MatchResults {
@@ -174,6 +237,51 @@ export interface MatchResults {
     isPlayer: () => false,
     isRankings: () => false,
     isMatches: () => true,
+    isEvent: () => false,
+    isEvents: () => false,
+    isPlayers: () => false,
+}
+
+export interface Events {
+    type: PageType.Events,
+    data: EventsData,
+    isForum: () => false,
+    isMatch: () => false,
+    isTeam: () => false,
+    isPlayer: () => false,
+    isRankings: () => false,
+    isMatches: () => false,
+    isEvent: () => false,
+    isEvents: () => true,
+    isPlayers: () => false,
+}
+
+export interface Event {
+    type: PageType.Event,
+    data: EventData,
+    isForum: () => false,
+    isMatch: () => false,
+    isTeam: () => false,
+    isPlayer: () => false,
+    isRankings: () => false,
+    isMatches: () => false,
+    isEvent: () => true,
+    isEvents: () => false,
+    isPlayers: () => false,
+}
+
+export interface Players {
+    type: PageType.Players,
+    data: PlayersData,
+    isForum: () => false,
+    isMatch: () => false,
+    isTeam: () => false,
+    isPlayer: () => false,
+    isRankings: () => false,
+    isMatches: () => false,
+    isEvent: () => false,
+    isEvents: () => false,
+    isPlayers: () => true,
 }
 
 /**
@@ -196,3 +304,26 @@ export function getMatchResults(page?: number | string): Promise<MatchResults | 
  * Get top 10 or all rankings of each region (Max 10 teams per region) [vlr.gg/rankings](https://www.vlr.gg/rankings)
  */
 export function getRankings(): Promise<Rankings | Error>;
+
+/**
+ * Get upcoming, completed, and ongoings events [vlr.gg/events](https://www.vlr.gg/events)
+ * @param region Get events from a specific region
+ */
+export function getEvents(region?: string): Promise<Events | Error>;
+
+/**
+ * View information on a specific event
+ * @param id The ID of the event (ex. `/1`)
+ */
+export function getEvent(id: number | string): Promise<Event | Error>;
+
+/**
+ * View all personal that either rostered or free [vlr.gg/players/others](https://www.vlr.gg/players/others)
+ */
+export function getPlayers(): Promise<Players | Error>;
+
+/**
+ * View information on a specific player
+ * @param id The ID of the player (ex. `/1`)
+ */
+export function getPlayer(id: number | string): Promise<Player | Error>;
