@@ -23,11 +23,12 @@ module.exports = async function getPage(path) {
         return {
             type: r.type,
             data: r.data,
-        isForum: () => r.type === 1,
-        isMatch: () => r.type === 2,
-        isTeam: () => r.type === 3,
-        isPlayer: () => r.type === 4,
-        isRankings: () => r.type === 5,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
         }
     } catch (e) {
         const r = await res.body.text();
@@ -67,8 +68,125 @@ module.exports.getMatchResults = async function getMatchResults(page) {
     try {
         const r = await res.body.json()
         if (r.error) return r;
-        return r
+        return {
+            type: r.type,
+            data: r.data
+        }
     } catch (e) {
         throw e;
+    }
+}
+module.exports.getRankings = async function getRankings(region) {
+    if (region && typeof region !== "string") throw new ValidationError('Region is not a string');
+    const res = await Cli.request({
+        method: 'GET',
+        path: `/rankings/${_.kebabCase(region) || ""}`
+    });
+    try {
+        const r = await res.body.json()
+        if (r.error) return r;
+        return {
+            type: r.type,
+            data: r.data
+        }
+    } catch (e) {
+        try {
+            const r = await res.body.text();
+            if (r) console.error(r)
+            else throw e;
+        } catch (_e) {
+            throw _e;
+        }
+    }
+}
+module.exports.getEvents = async function getEvents(region) {
+    if (region && typeof region !== "string") throw new ValidationError('Region is not a string');
+    const res = await Cli.request({
+        method: 'GET',
+        path: `/events/${_.kebabCase(region) || ""}`
+    });
+    try {
+        const r = await res.body.json()
+        if (r.error) return r;
+        return {
+            type: r.type,
+            data: r.data
+        }
+    } catch (e) {
+        try {
+            const r = await res.body.text();
+            if (r) console.error(r)
+            else throw e;
+        } catch (_e) {
+            throw _e;
+        }
+    }
+}
+module.exports.getPlayers = async function getPlayers() {
+    const res = await Cli.request({
+        method: 'GET',
+        path: `/players/others`
+    });
+    try {
+        const r = await res.body.json()
+        if (r.error) return r;
+        return {
+            type: r.type,
+            data: r.data
+        }
+    } catch (e) {
+        try {
+            const r = await res.body.text();
+            if (r) console.error(r)
+            else throw e;
+        } catch (_e) {
+            throw _e;
+        }
+    }
+}
+module.exports.getPlayer = async function getPlayer(id) {
+    if (typeof id !== "string" && typeof id !== "number") throw new ValidationError("Parameter 'id' is not a string or number")
+    const res = await Cli.request({
+        method: 'GET',
+        path: id.startsWith('/') ? `/player${id}` : `/player/${id}`
+    });
+    try {
+        const r = await res.body.json()
+        if (r.error) return r;
+        return {
+            type: r.type,
+            data: r.data
+        }
+    } catch (e) {
+        try {
+            const r = await res.body.text();
+            if (r) console.error(r)
+            else throw e;
+        } catch (_e) {
+            throw _e;
+        }
+    }
+}
+module.exports.getEvent = async function getEvent(id) {
+    if (typeof id !== "string" && typeof id !== "number") throw new ValidationError("Parameter 'id' is not a string or number")
+    const res = await Cli.request({
+        method: 'GET',
+        path: id.startsWith('/') ? `/event${id}` : `/event/${id}`
+    });
+    try {
+        const r = await res.body.json()
+        if (r.error) return r;
+        return {
+            type: r.type,
+            data: r.data
+        }
+    } catch (e) {
+        try {
+            const r = await res.body.text();
+            if (r) console.error(r)
+            else throw e;
+        } catch (_e) {
+            throw _e;
+        }
     }
 }
