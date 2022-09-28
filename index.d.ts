@@ -7,6 +7,7 @@ export enum Fillers {
 }
 
 export enum PageType {
+    Error = 0,
     Forum = 1,
     Match = 2,
     Team = 3,
