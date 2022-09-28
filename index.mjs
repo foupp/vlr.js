@@ -28,6 +28,7 @@ export default async function getPage(path) {
         return {
             type: r.type,
             data: r.data,
+            isError: () => r.type === 0,
             isForum: () => r.type === 1,
             isMatch: () => r.type === 2,
             isTeam: () => r.type === 3,
