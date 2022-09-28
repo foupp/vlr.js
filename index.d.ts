@@ -6,7 +6,7 @@ export enum Fillers {
     TBD = 'TBD',
 }
 
-export enum PageType {
+export enum ResponseType {
     Error = 0,
     Forum = 1,
     Match = 2,
@@ -154,7 +154,7 @@ type RankingsData = Array<{
 }>
 
 export type Match = {
-    type: PageType.Match,
+    type: ResponseType.Match,
     data: Match,
     isForum: () => false,
     isMatch: () => true,
@@ -168,7 +168,7 @@ export type Match = {
 }
 
 export type Player = {
-    type: PageType.Player,
+    type: ResponseType.Player,
     data: Player,
     isForum: () => false,
     isMatch: () => false,
@@ -182,7 +182,7 @@ export type Player = {
 }
 
 export type Team = {
-    type: PageType.Team
+    type: ResponseType.Team
     data: TeamData,
     isForum: () => false,
     isMatch: () => false,
@@ -196,7 +196,7 @@ export type Team = {
 }
 
 export type Forum = {
-    type: PageType.Forum,
+    type: ResponseType.Forum,
     data: ForumData,
     isForum: () => true,
     isMatch: () => false,
@@ -210,7 +210,7 @@ export type Forum = {
 }
 
 export type Rankings = {
-    type: PageType.Rankings,
+    type: ResponseType.Rankings,
     data: RankingsData,
     isForum: () => false,
     isMatch: () => false,
@@ -224,7 +224,7 @@ export type Rankings = {
 }
 
 export type Matches = {
-    type: PageType.Matches,
+    type: ResponseType.Matches,
     data: MatchesData,
     isForum: () => false,
     isMatch: () => false,
@@ -238,7 +238,7 @@ export type Matches = {
 }
 
 export type MatchResults = {
-    type: PageType.Matches,
+    type: ResponseType.Matches,
     data: MatchResultsData,
     isForum: () => false,
     isMatch: () => false,
@@ -252,7 +252,7 @@ export type MatchResults = {
 }
 
 export type Events = {
-    type: PageType.Events,
+    type: ResponseType.Events,
     data: EventsData,
     isForum: () => false,
     isMatch: () => false,
@@ -266,7 +266,7 @@ export type Events = {
 }
 
 export type Event = {
-    type: PageType.Event,
+    type: ResponseType.Event,
     data: EventData,
     isForum: () => false,
     isMatch: () => false,
@@ -280,7 +280,7 @@ export type Event = {
 }
 
 export type Players = {
-    type: PageType.Players,
+    type: ResponseType.Players,
     data: PlayersData,
     isForum: () => false,
     isMatch: () => false,
