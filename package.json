@@ -1,6 +1,6 @@
 {
   "name": "vlr.js",
-  "version": "1.4.11",
+  "version": "1.4.12",
   "description": "Fetch live information from vlr.gg (Valorant esports coverage)",
   "module": "./index.mjs",
   "main": "./index.js",
