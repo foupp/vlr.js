@@ -23,7 +23,17 @@ export default async function getPage(path) {
         if (r.code && r.message) return {
             error: true,
             code: r.code,
-            message: r.message
+            message: r.message,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         };
         return {
             type: r.type,
@@ -55,11 +65,31 @@ export async function getMatches() {
         if (r.code && r.message) return {
             error: true,
             code: r.code,
-            message: r.message
+            message: r.message,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         };
         return {
             type: r.type,
-            data: r.data
+            data: r.data,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         }
     } catch (e) {
         const r = await res.body.text();
@@ -76,7 +106,7 @@ export async function getMatchResults(page) {
         method: 'GET',
         path: '/matches/results/',
         query: {
-            page: page || 1
+            page: page || "1"
         }
     });
     try {
@@ -84,11 +114,31 @@ export async function getMatchResults(page) {
         if (r.code && r.message) return {
             error: true,
             code: r.code,
-            message: r.message
+            message: r.message,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         };
         return {
             type: r.type,
-            data: r.data
+            data: r.data,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         }
     } catch (e) {
         const r = await res.body.text();
@@ -107,11 +157,31 @@ export async function getRankings(region) {
         if (r.code && r.message) return {
             error: true,
             code: r.code,
-            message: r.message
+            message: r.message,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         };
         return {
             type: r.type,
-            data: r.data
+            data: r.data,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         }
     } catch (e) {
         try {
@@ -134,11 +204,31 @@ export async function getEvents(region) {
         if (r.code && r.message) return {
             error: true,
             code: r.code,
-            message: r.message
+            message: r.message,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         };
         return {
             type: r.type,
-            data: r.data
+            data: r.data,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         }
     } catch (e) {
         try {
@@ -160,11 +250,31 @@ export async function getPlayers() {
         if (r.code && r.message) return {
             error: true,
             code: r.code,
-            message: r.message
+            message: r.message,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         };
         return {
             type: r.type,
-            data: r.data
+            data: r.data,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         }
     } catch (e) {
         try {
@@ -187,11 +297,31 @@ export async function getPlayer(id) {
         if (r.code && r.message) return {
             error: true,
             code: r.code,
-            message: r.message
+            message: r.message,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         };
         return {
             type: r.type,
-            data: r.data
+            data: r.data,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         }
     } catch (e) {
         try {
@@ -214,11 +344,31 @@ export async function getEvent(id) {
         if (r.code && r.message) return {
             error: true,
             code: r.code,
-            message: r.message
+            message: r.message,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         };
         return {
             type: r.type,
-            data: r.data
+            data: r.data,
+            isError: () => r.type === 0,
+            isForum: () => r.type === 1,
+            isMatch: () => r.type === 2,
+            isTeam: () => r.type === 3,
+            isPlayer: () => r.type === 4,
+            isRankings: () => r.type === 5,
+            isMatches: () => r.type === 6,
+            isEvent: () => r.type === 7,
+            isEvents: () => r.type === 8,
+            isPlayers: () => r.type === 9,
         }
     } catch (e) {
         try {

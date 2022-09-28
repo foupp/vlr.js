@@ -121,7 +121,17 @@ type ReqError = {
     data: {
         code: number,
         message: string
-    }
+    },
+    isError: () => true,
+    isForum: () => false,
+    isMatch: () => false,
+    isTeam: () => false,
+    isPlayer: () => false,
+    isRankings: () => false,
+    isMatches: () => false,
+    isEvent: () => true,
+    isEvents: () => false,
+    isPlayers: () => false,
 }
 
 type TeamData = {
@@ -156,6 +166,7 @@ type RankingsData = Array<{
 export type Match = {
     type: ResponseType.Match,
     data: Match,
+    isError: () => false,
     isForum: () => false,
     isMatch: () => true,
     isTeam: () => false,
@@ -170,6 +181,7 @@ export type Match = {
 export type Player = {
     type: ResponseType.Player,
     data: Player,
+    isError: () => false,
     isForum: () => false,
     isMatch: () => false,
     isTeam: () => false,
@@ -184,6 +196,7 @@ export type Player = {
 export type Team = {
     type: ResponseType.Team
     data: TeamData,
+    isError: () => false,
     isForum: () => false,
     isMatch: () => false,
     isTeam: () => true,
@@ -198,6 +211,7 @@ export type Team = {
 export type Forum = {
     type: ResponseType.Forum,
     data: ForumData,
+    isError: () => false,
     isForum: () => true,
     isMatch: () => false,
     isTeam: () => false,
@@ -212,6 +226,7 @@ export type Forum = {
 export type Rankings = {
     type: ResponseType.Rankings,
     data: RankingsData,
+    isError: () => false,
     isForum: () => false,
     isMatch: () => false,
     isTeam: () => false,
@@ -226,6 +241,7 @@ export type Rankings = {
 export type Matches = {
     type: ResponseType.Matches,
     data: MatchesData,
+    isError: () => false,
     isForum: () => false,
     isMatch: () => false,
     isTeam: () => false,
@@ -240,6 +256,7 @@ export type Matches = {
 export type MatchResults = {
     type: ResponseType.Matches,
     data: MatchResultsData,
+    isError: () => false,
     isForum: () => false,
     isMatch: () => false,
     isTeam: () => false,
@@ -254,6 +271,7 @@ export type MatchResults = {
 export type Events = {
     type: ResponseType.Events,
     data: EventsData,
+    isError: () => false,
     isForum: () => false,
     isMatch: () => false,
     isTeam: () => false,
@@ -268,6 +286,7 @@ export type Events = {
 export type Event = {
     type: ResponseType.Event,
     data: EventData,
+    isError: () => false,
     isForum: () => false,
     isMatch: () => false,
     isTeam: () => false,
@@ -282,6 +301,7 @@ export type Event = {
 export type Players = {
     type: ResponseType.Players,
     data: PlayersData,
+    isError: () => false,
     isForum: () => false,
     isMatch: () => false,
     isTeam: () => false,
