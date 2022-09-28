@@ -116,12 +116,14 @@ type EventData = {
 }
 
 type ReqError = {
-    error: true,
-    code: r.code,
-    message: r.message
+    type: 0,
+    data: {
+        code: number,
+        message: string
+    }
 }
 
-type TeamDat = {
+type TeamData = {
     name: string;
     rank: number | Fillers.NotAvailable;
     country: string;
