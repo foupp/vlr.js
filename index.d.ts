@@ -70,19 +70,19 @@ type PlayersData = Array<{
     player: {
         alias: string;
         name: string;
-        position: "Player" | "Analyst" | "Manager" | "Assistant coach" | "Head coach" | "Coach" | string | Fillers.NotAvailable;
-        currentTeam: {
-            name: string | Fillers.NotAvailable;
-            link: `/${string}`;
-        };
-        previousTeam: {
-            name: string | Fillers.NotAvailable;
-            link: `/${string}` | Fillers.NotAvailable;
-        };
-        social: Array<string> | Fillers.NotAvailable;
-        origin: Intl.DisplayNames | string;
-        winnings: `$${string}`
-    }
+    };
+    position: "Player" | "Analyst" | "Manager" | "Assistant coach" | "Head coach" | "Coach" | string | Fillers.NotAvailable;
+    currentTeam: {
+        name: string | Fillers.NotAvailable;
+        link: `/${string}`;
+    };
+    previousTeam: {
+        name: string | Fillers.NotAvailable;
+        link: `/${string}` | Fillers.NotAvailable;
+    };
+    social: Array<string> | Fillers.NotAvailable;
+    origin: Intl.DisplayNames | string;
+    winnings: `$${string}`
 }>;
 
 type PlayerData = {
@@ -356,3 +356,9 @@ export function getPlayers(): Promise<Players | ReqError>;
  * @param id The ID of the player (ex. `/1`)
  */
 export function getPlayer(id: number | string): Promise<Player | ReqError>;
+
+/**
+ * View information on a specific team
+ * @param id The ID of the team (ex. `/2`)
+ */
+export function getTeam(id: number | string): Promise<Team | ReqError>;
