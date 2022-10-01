@@ -225,3 +225,30 @@ module.exports.getEvent = async function getEvent(id) {
         }
     }
 }
+module.exports.getTeam = async function getTeam(id) {
+    if (!_.isString(id) && !_.isNumber(id)) throw new ValidationError("Parameter 'id' is not a string or number");
+    const res = await Cli.request({
+        method: 'GET',
+        path: typeof id === "string" && id.startsWith('/') ? `/team${id}` : `/team/${id}`
+    });
+    try {
+        const r = await res.body.json()
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
+        return {
+            type: r.type,
+            data: r.data
+        }
+    } catch (e) {
+        try {
+            const r = await res.body.text();
+            if (r) console.error(r)
+            else throw e;
+        } catch (_e) {
+            throw _e;
+        }
+    }
+}

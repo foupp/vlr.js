@@ -11,8 +11,9 @@ class ValidationError extends Error {
 const Cli = new Client('https://vlr-js.vercel.app');
 
 export default async function getPage(path) {
-    if (!path) throw Error("Path parameter is required!")
-    if (!path.startsWith('/')) throw new ValidationError("Path parameter must start with a forward slash --> /")
+    if (!path) throw Error("Parameter 'path' is required!")
+    if (!_.isString(path)) throw ValidationError("Parameter 'path' is not a string!")
+    if (!path.startsWith('/')) throw new ValidationError("Parameter 'path' must start with a forward slash --> /")
         
     const res = await Cli.request({
         method: 'GET',
@@ -65,8 +66,8 @@ export async function getMatches() {
     }
 }
 export async function getMatchResults(page) {
-    if (page && typeof page === "number" && page < 1) throw new ValidationError("Page parameter must be number greater than 0")
-    if (page && typeof page === "string" && _.isNumber(_.toNumber(page))) page = _.toNumber(page);
+    if (page && _.isNumber(page) && page < 1) throw new ValidationError("Page parameter must be number greater than 0")
+    if (page && _.isString(page) && _.isNumber(_.toNumber(page))) page = _.toNumber(page);
     else if (page) throw new ValidationError("Page parameter must be a number by itself OR a number in a string")
         
     const res = await Cli.request({
@@ -98,7 +99,7 @@ export async function getMatchResults(page) {
     }
 }
 export async function getRankings(region) {
-    if (region && typeof region !== "string") throw new ValidationError('Region is not a string');
+    if (region && _.isString(region)) throw new ValidationError('Region is not a string');
     const res = await Cli.request({
         method: 'GET',
         path: `/rankings/${region ? _.kebabCase(region) : ""}`
@@ -125,7 +126,7 @@ export async function getRankings(region) {
     }
 }
 export async function getEvents(region) {
-    if (region && typeof region !== "string") throw new ValidationError('Region is not a string');
+    if (region && _.isString(region)) throw new ValidationError('Region is not a string');
     const res = await Cli.request({
         method: 'GET',
         path: `/events/${region ? _.kebabCase(region) : ""}`
@@ -178,7 +179,7 @@ export async function getPlayers() {
     }
 }
 export async function getPlayer(id) {
-    if (typeof id !== "string" && typeof id !== "number") throw new ValidationError("Parameter 'id' is not a string or number")
+    if (!_.isString(id) && !_.isNumber(id)) throw new ValidationError("Parameter 'id' is not a string or number")
     const res = await Cli.request({
         method: 'GET',
         path: typeof id === "string" && id.startsWith('/') ? `/player${id}` : `/player/${id}`
@@ -205,10 +206,37 @@ export async function getPlayer(id) {
     }
 }
 export async function getEvent(id) {
-    if (typeof id !== "string" && typeof id !== "number") throw new ValidationError("Parameter 'id' is not a string or number")
+    if (!_.isString(id) && !_.isNumber(id)) throw new ValidationError("Parameter 'id' is not a string or number")
     const res = await Cli.request({
         method: 'GET',
         path: typeof id === "string" && id.startsWith('/') ? `/event${id}` : `/event/${id}`
+    });
+    try {
+        const r = await res.body.json()
+        if (r.code && r.message) return {
+            error: true,
+            code: r.code,
+            message: r.message
+        };
+        return {
+            type: r.type,
+            data: r.data
+        }
+    } catch (e) {
+        try {
+            const r = await res.body.text();
+            if (r) console.error(r)
+            else throw e;
+        } catch (_e) {
+            throw _e;
+        }
+    }
+}
+export async function getTeam(id) {
+    if (!_.isString(id) && !_.isNumber(id)) throw new ValidationError("Parameter 'id' is not a string or number");
+    const res = await Cli.request({
+        method: 'GET',
+        path: typeof id === "string" && id.startsWith('/') ? `/team${id}` : `/team/${id}`
     });
     try {
         const r = await res.body.json()
