@@ -62,5 +62,4 @@ console.log({
 
 ## Roadmap
 
-- Add `getTeam` function
 - Add threads and forum index
